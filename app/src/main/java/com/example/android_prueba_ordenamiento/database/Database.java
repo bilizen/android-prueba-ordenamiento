@@ -38,7 +38,7 @@ public class Database extends SQLiteOpenHelper{
                 COLUMN_ELEMENT_NAME +" TEXT , "+
                 COLUMN_ELEMENT_ORDER_CURRENT +" INTEGER , "+
                 COLUMN_ELEMENT_ORDER_LAST +" INTEGER , "+
-                COLUMN_ELEMENT_COUNT +" INTEGER , " +
+                COLUMN_ELEMENT_COUNT +" INTEGER DEFAULT 0 , " +
                 COLUMN_ELEMENT_COLOR + " TEXT ) ";
         sqLiteDatabase.execSQL(SQL_CREATE_TABLE_ELEMENT);
     }
@@ -70,7 +70,6 @@ public class Database extends SQLiteOpenHelper{
         contentValues.put(COLUMN_ELEMENT_NAME, element.getName());
         contentValues.put(COLUMN_ELEMENT_ORDER_CURRENT, element.getOrderCurrent());
         contentValues.put(COLUMN_ELEMENT_ORDER_LAST, element.getOrderLast());
-        contentValues.put(COLUMN_ELEMENT_COUNT, element.getCont());
         contentValues.put(COLUMN_ELEMENT_COLOR, element.getColor());
         db.insert(TABLE_NAME_ELEMENT, null, contentValues);
         db.close();

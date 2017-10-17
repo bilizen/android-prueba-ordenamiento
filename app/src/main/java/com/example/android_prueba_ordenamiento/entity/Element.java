@@ -15,11 +15,10 @@ public class Element {
     public Element() {
     }
 
-    public Element(String name, int orderCurrent, int orderLast, int cont, String color) {
+    public Element(String name, int orderCurrent, int orderLast, String color) {
         this.name = name;
         this.orderCurrent = orderCurrent;
         this.orderLast = orderLast;
-        this.cont = cont;
         this.color = color;
     }
 
