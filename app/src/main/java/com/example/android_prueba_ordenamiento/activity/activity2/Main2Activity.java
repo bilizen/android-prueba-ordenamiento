@@ -14,7 +14,7 @@ public class Main2Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("color fondo");
+        getSupportActionBar().setTitle("Color fondo");
         linearLayoutSecondary=(LinearLayout) findViewById(R.id.linearLayoutSecondary);
         Bundle bundle=getIntent().getExtras();
         linearLayoutSecondary.setBackgroundColor(Color.parseColor(bundle.getString("color")));

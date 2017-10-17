@@ -49,12 +49,10 @@ public class AdapterElements extends RecyclerView.Adapter<AdapterElements.MyView
         private CardView cardView;
         private Element element;
         private Database database;
-        private View view;
         private int totalElements;
 
         MyViewHolder(View itemView) {
             super(itemView);
-            view=itemView;
             database= new Database(itemView.getContext());
             cardView=itemView.findViewById(R.id.cardViewElement);
         }
@@ -78,7 +76,7 @@ public class AdapterElements extends RecyclerView.Adapter<AdapterElements.MyView
                     for (int i = 2; i <= database.getArrayListElements().size(); i++) {
                         database.updateOrderLatestByOrder(i);
                     }
-                    database.updateOrderLatest(element.getId());
+                    database.updateOrderLatest(element.getId(),totalElements);
                 }
                 database.updateContLatest(element.getId());
                 Intent intent = new Intent(view.getContext(), Main2Activity.class);

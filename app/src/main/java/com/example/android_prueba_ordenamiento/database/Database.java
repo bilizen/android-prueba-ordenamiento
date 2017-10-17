@@ -135,7 +135,7 @@ public class Database extends SQLiteOpenHelper{
         return element;
     }
 
-
+//  dismuye un(1) orden de los elementos
     public void updateOrderLatestByOrder(int orderLatest){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
                 " SET "+COLUMN_ELEMENT_ORDER_LAST+" =  "+(orderLatest-1)+
@@ -145,16 +145,17 @@ public class Database extends SQLiteOpenHelper{
         sqLiteDatabase.close();
     }
 
-
-    public void updateOrderLatest(int id){
+//    actualizar el ultimo elemento tocado
+    public void updateOrderLatest(int id,int order){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
-                " SET "+COLUMN_ELEMENT_ORDER_LAST+" = 3 "+
+                " SET "+COLUMN_ELEMENT_ORDER_LAST+" = "+order+
                 " WHERE "+COLUMN_ELEMENT_ID+" = "+id;
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         sqLiteDatabase.execSQL(SQL_UPDATE);
         sqLiteDatabase.close();
     }
 
+//    actualizar el ultimo orden de cada elemento
     public void updateContLatest(int id){
         Element element=getElement(id);
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
@@ -165,6 +166,7 @@ public class Database extends SQLiteOpenHelper{
         sqLiteDatabase.close();
     }
 
+//    actualiza el orden actual de los elementos
     public void updateOrderCurrent(Element element){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
                 " SET "+COLUMN_ELEMENT_ORDER_CURRENT+" = "+element.getOrderLast()+
@@ -174,6 +176,7 @@ public class Database extends SQLiteOpenHelper{
         sqLiteDatabase.close();
     }
 
+//    resetea todos los contadoras de los elementos
     public void updateResetCont(){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
                 " SET "+COLUMN_ELEMENT_COUNT+" = 0";

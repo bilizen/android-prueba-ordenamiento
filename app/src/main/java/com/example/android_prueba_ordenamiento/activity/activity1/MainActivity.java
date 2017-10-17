@@ -24,19 +24,28 @@ public class MainActivity extends AppCompatActivity {
         recyclerViewElements= (RecyclerView) findViewById(R.id.recyclerViewElements);
         database=new Database(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("Ordenamiento");
+
         recyclerViewElements.setHasFixedSize(false);
         LinearLayoutManager linearLayoutManager= new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerViewElements.setLayoutManager(linearLayoutManager);
 
         insertElements();
-        orderElements();
+        orderElements(database.getArrayListElements());
+        showListElements(database.getArrayListElements());
 
-        adapterElements=new AdapterElements(database.getArrayListElements());
-        recyclerViewElements.setAdapter(adapterElements);
 
     }
 
+//    muestra la lista de elementos
+    public void showListElements(ArrayList<Element> elements){
+        adapterElements=new AdapterElements(elements);
+        recyclerViewElements.setAdapter(adapterElements);
+    }
+
+//    inserta los elemntos a la base de datos si no hay data
     public void insertElements(){
         if(database.countElements()==0){
             database.insertElement(new Element("verde",1,1,0,"#4CAF50"));
@@ -46,31 +55,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void orderElements(){
-        if(touchMax()) {
-            updateAllOrderCurrent();
+//    ordenar los elementos cuando superan los 3 touch en algun elemento
+    public void orderElements(ArrayList<Element> arrayList){
+        if(touchMax(arrayList)) {
+            updateAllOrderCurrent(arrayList);
             resetContElements();
         }
     }
 
-
-    public boolean touchMax(){
-        ArrayList<Element> elementArrayList= database.getArrayListElements();
-        for(int i=0;i<elementArrayList.size();i++){
-            if(elementArrayList.get(i).getCont()>=3){
+//    retorna true si algun elemento tiene 3 o mas touch
+    public boolean touchMax(ArrayList<Element> elements){
+//        ArrayList<Element> elementArrayList= database.getArrayListElements();
+        for(int i=0;i<elements.size();i++){
+            if(elements.get(i).getCont()>=3){
                 return true;
             }
         }
         return false;
     }
 
-    public void updateAllOrderCurrent(){
-        ArrayList<Element> elementArrayList=database.getArrayListElements();
-        for(int i=0;i<elementArrayList.size();i++){
-            database.updateOrderCurrent(elementArrayList.get(i));
+//    actualiza el orden de todos elementos
+    public void updateAllOrderCurrent(ArrayList<Element> elements){
+//        ArrayList<Element> elementArrayList=database.getArrayListElements();
+        for(int i=0;i<elements.size();i++){
+            database.updateOrderCurrent(elements.get(i));
         }
     }
 
+//    reseta el contador de todos los elementos cuando se ordenan
     public void resetContElements(){
         database.updateResetCont();
     }
