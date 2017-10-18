@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 //    actualiza el orden de todos elementos
     public void updateAllOrderCurrent(ArrayList<Element> elements){
         for(int i=0;i<elements.size();i++){
-            database.updateOrderCurrent(elements.get(i));
+            database.updateOrderCurrent(elements.get(i),(elements.size()-i));
         }
     }
 

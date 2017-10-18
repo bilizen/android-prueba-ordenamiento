@@ -84,7 +84,7 @@ public class Database extends SQLiteOpenHelper{
                 COLUMN_ELEMENT_COUNT+" , "+
                 COLUMN_ELEMENT_COLOR+
                 " FROM "+TABLE_NAME_ELEMENT +
-                " ORDER BY "+COLUMN_ELEMENT_ORDER_CURRENT+" DESC ";
+                " ORDER BY "+COLUMN_ELEMENT_COUNT+" DESC ,"+COLUMN_ELEMENT_ORDER_LAST+" DESC ";
         ArrayList<Element> elementArrayList= new ArrayList<>();
         Element element;
         SQLiteDatabase db=this.getWritableDatabase();
@@ -166,9 +166,9 @@ public class Database extends SQLiteOpenHelper{
     }
 
 //    actualiza el orden actual de los elementos
-    public void updateOrderCurrent(Element element){
+    public void updateOrderCurrent(Element element,int order){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
-                " SET "+COLUMN_ELEMENT_ORDER_CURRENT+" = "+element.getOrderLast()+
+                " SET "+COLUMN_ELEMENT_ORDER_CURRENT+" = "+order+
                 " WHERE "+COLUMN_ELEMENT_ID+" = "+element.getId();
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         sqLiteDatabase.execSQL(SQL_UPDATE);
