@@ -75,7 +75,8 @@ public class Database extends SQLiteOpenHelper{
         db.close();
     }
 
-    public ArrayList<Element> getArrayListElements(){
+//    obtiene los elementos con el con el ultimo orden
+    public ArrayList<Element> getArrayListElementsLast(){
         String SQL_SELECT = "SELECT "+
                 COLUMN_ELEMENT_ID+" , "+
                 COLUMN_ELEMENT_NAME+" , "+
@@ -84,7 +85,39 @@ public class Database extends SQLiteOpenHelper{
                 COLUMN_ELEMENT_COUNT+" , "+
                 COLUMN_ELEMENT_COLOR+
                 " FROM "+TABLE_NAME_ELEMENT +
-                " ORDER BY "+COLUMN_ELEMENT_COUNT+" DESC ,"+COLUMN_ELEMENT_ORDER_CURRENT+" DESC ";
+                " ORDER BY "+COLUMN_ELEMENT_COUNT+" DESC ,"+COLUMN_ELEMENT_ORDER_LAST+" DESC ";
+        ArrayList<Element> elementArrayList= new ArrayList<>();
+        Element element;
+        SQLiteDatabase db=this.getWritableDatabase();
+        Cursor cursor= db.rawQuery(SQL_SELECT,null);
+        if(cursor.moveToFirst()){
+            do {
+                element= new Element();
+                element.setId(cursor.getInt(0));
+                element.setName(cursor.getString(1));
+                element.setOrderCurrent(cursor.getInt(2));
+                element.setOrderLast(cursor.getInt(3));
+                element.setCont(cursor.getInt(4));
+                element.setColor(cursor.getString(5));
+                elementArrayList.add(element);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return elementArrayList;
+    }
+
+//  obtiene los elementos con el orden actual
+    public ArrayList<Element> getArrayListElementsCurrent(){
+        String SQL_SELECT = "SELECT "+
+                COLUMN_ELEMENT_ID+" , "+
+                COLUMN_ELEMENT_NAME+" , "+
+                COLUMN_ELEMENT_ORDER_CURRENT+" , "+
+                COLUMN_ELEMENT_ORDER_LAST+" , "+
+                COLUMN_ELEMENT_COUNT+" , "+
+                COLUMN_ELEMENT_COLOR+
+                " FROM "+TABLE_NAME_ELEMENT +
+                " ORDER BY "+COLUMN_ELEMENT_ORDER_CURRENT+" DESC ";
         ArrayList<Element> elementArrayList= new ArrayList<>();
         Element element;
         SQLiteDatabase db=this.getWritableDatabase();
@@ -168,7 +201,8 @@ public class Database extends SQLiteOpenHelper{
 //    actualiza el orden actual de los elementos
     public void updateOrderCurrent(Element element,int order){
         String SQL_UPDATE=" UPDATE "+ TABLE_NAME_ELEMENT +
-                " SET "+COLUMN_ELEMENT_ORDER_CURRENT+" = "+order+
+                " SET "+COLUMN_ELEMENT_ORDER_CURRENT+" = "+order+" , "+
+                COLUMN_ELEMENT_ORDER_LAST+" = "+order+
                 " WHERE "+COLUMN_ELEMENT_ID+" = "+element.getId();
         SQLiteDatabase sqLiteDatabase=this.getWritableDatabase();
         sqLiteDatabase.execSQL(SQL_UPDATE);

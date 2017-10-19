@@ -73,7 +73,7 @@ public class AdapterElements extends RecyclerView.Adapter<AdapterElements.MyView
         public void onClick(View view) {
             if(view.getId()==R.id.cardViewElement) {
                 if (database.getElement(element.getId()).getOrderLast() != totalElements) {
-                    for (int i = 2; i <= database.getArrayListElements().size(); i++) {
+                    for (int i = 2; i <= totalElements; i++) {
                         database.updateOrderLatestByOrder(i);
                     }
                     database.updateOrderLatest(element.getId(),totalElements);

@@ -18,7 +18,7 @@ public class MainAcitivityInteractor implements MainActivityInterface.Interactor
         this.presenter = presenter;
     }
 
-//    inserta los elemntos a la base de datos si no hay data
+//    inserta los elementos a la base de datos si no hay data
     @Override
     public void insertElements(Database database) {
         if(database.countElements()==0){
@@ -33,14 +33,14 @@ public class MainAcitivityInteractor implements MainActivityInterface.Interactor
 //    ordenar los elementos cuando superan los 3 touch en algun elemento y mostrarlo
     @Override
     public void orderElements(Database database){
-        ArrayList<Element> elements = database.getArrayListElements();
+        ArrayList<Element> elements = database.getArrayListElementsLast();
         if(touchMax(elements)) {
             updateAllOrderCurrent(database,elements);
             resetContElements(database);
             presenter.showMessage("Se ordenaron los elementos");
             Log.i("MainActivityView","se ordenó los elementos");
         }
-        presenter.showListElements(database.getArrayListElements());
+        presenter.showListElements(database.getArrayListElementsCurrent());
     }
 
 //    retorna true si algun elemento tiene 3 o mas touch
